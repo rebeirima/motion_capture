@@ -13,3 +13,13 @@ hand_trial_*/
 
 # macOS
 .DS_Store
+
+# Old/raw calibration recordings
+calibration_videos/
+
+# Include the current hand trial through Git LFS
+!hand_trial_20260727_151558/
+!hand_trial_20260727_151558/raw/
+!hand_trial_20260727_151558/raw/*.mkv
+!hand_trial_20260727_151558/logs/
+!hand_trial_20260727_151558/logs/*.log
