@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Large video files
+*.mkv
+
+# Temporary recordings
+intrinsics_cam*_new.mkv
+intrinsic_video_backups/
+extrinsics_*/
+hand_trial_*/
+
+# macOS
+.DS_Store
