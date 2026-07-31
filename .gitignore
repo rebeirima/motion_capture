@@ -23,3 +23,21 @@ calibration_videos/
 !hand_trial_20260727_151558/raw/*.mkv
 !hand_trial_20260727_151558/logs/
 !hand_trial_20260727_151558/logs/*.log
+
+# Include aligned pilot participant sessions through Git LFS
+!P*_hand_gestures_*/
+!P*_hand_gestures_*/aligned/
+!P*_hand_gestures_*/aligned/*.mkv
+!P*_hand_gestures_*/metadata/
+!P*_hand_gestures_*/metadata/*
+!P*_hand_gestures_*/logs/
+!P*_hand_gestures_*/logs/*.log
+
+# Include aligned pilot participant sessions through Git LFS
+!P*_hand_gestures_*/
+!P*_hand_gestures_*/aligned/
+!P*_hand_gestures_*/aligned/*.mkv
+!P*_hand_gestures_*/metadata/
+!P*_hand_gestures_*/metadata/*
+!P*_hand_gestures_*/logs/
+!P*_hand_gestures_*/logs/*.log

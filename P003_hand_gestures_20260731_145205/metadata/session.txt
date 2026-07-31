@@ -1,0 +1,6 @@
+participant=P003
+trial=hand_gestures
+date=2026-07-31T15:00:34-04:00
+resolution=1920x1080
+fps=30
+camera_count=5

@@ -1,1 +1,2 @@
 hand_trial_*/raw/*.mkv filter=lfs diff=lfs merge=lfs -text
+P*_hand_gestures_*/aligned/*.mkv filter=lfs diff=lfs merge=lfs -text
