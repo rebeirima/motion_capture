@@ -1,0 +1,7 @@
+participant_id=P005
+trial=hand_gestures
+session=P005_hand_gestures_20260801_155756
+recorded_at=2026-08-01T16:03:52-04:00
+resolution=1920x1080
+fps=30
+camera_count=5
