@@ -1,0 +1,3 @@
+# Python standard library only: no pip packages required.
+# FFmpeg + ffprobe must be installed separately when using aligned MKV videos.
+# Both are unnecessary when complete precomputed previews + a manifest are supplied.

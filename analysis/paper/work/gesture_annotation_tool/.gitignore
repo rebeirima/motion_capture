@@ -23,3 +23,6 @@ gesture_windows_*.json
 __pycache__/
 *.pyc
 .DS_Store
+
+# Explicitly approved center-camera demonstration only.
+!examples/C2_center_480p.mp4
