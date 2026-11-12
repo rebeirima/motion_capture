@@ -401,6 +401,44 @@
       "filename": "C2_S020_R_hand_gestures_20261110_120242_480p.mp4",
       "sha256": "e5134fc1baac115b72c7c1b9a77d6121fb45a1d1f63bf74c232c1f5ff8534f01",
       "url": "https://raw.githubusercontent.com/rebeirima/motion_capture/main/analysis/paper/work/gesture_annotation_tool/annotation_videos/C2_S020_R_hand_gestures_20261110_120242_480p.mp4"
+    },
+    {
+      "session_id": "S022_L_hand_gestures_20261112_144858",
+      "hand": "L",
+      "physical_camera": "C2",
+      "position": "center",
+      "recorded_camera": 3,
+      "display_to_recorded": [
+        2,
+        4,
+        3,
+        1,
+        0
+      ],
+      "frame_count": 4394,
+      "fps": 30,
+      "filename": "C2_S022_L_hand_gestures_20261112_144858_480p.mp4",
+      "sha256": "34fc755e354770e174bc02c55d768dc469e21157e326c3db157f867d5148131a",
+      "url": "https://raw.githubusercontent.com/rebeirima/motion_capture/main/analysis/paper/work/gesture_annotation_tool/annotation_videos/C2_S022_L_hand_gestures_20261112_144858_480p.mp4"
+    },
+    {
+      "session_id": "S022_R_hand_gestures_20261112_145210",
+      "hand": "R",
+      "physical_camera": "C2",
+      "position": "center",
+      "recorded_camera": 0,
+      "display_to_recorded": [
+        4,
+        2,
+        0,
+        3,
+        1
+      ],
+      "frame_count": 4394,
+      "fps": 30,
+      "filename": "C2_S022_R_hand_gestures_20261112_145210_480p.mp4",
+      "sha256": "ccdc0b16afffbbec396f7a63743de16552ff4e80fc2daf12541bb7d3c257efa2",
+      "url": "https://raw.githubusercontent.com/rebeirima/motion_capture/main/analysis/paper/work/gesture_annotation_tool/annotation_videos/C2_S022_R_hand_gestures_20261112_145210_480p.mp4"
     }
   ]
 }
