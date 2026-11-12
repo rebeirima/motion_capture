@@ -1,0 +1,37 @@
+{
+  "session_id": "S017_L_hand_gestures_20261031_134933",
+  "hand": "L",
+  "physical_camera": "C2",
+  "position": "center",
+  "recorded_camera": 2,
+  "calibration_camera": 3,
+  "display_to_calibration": [
+    4,
+    1,
+    3,
+    2,
+    0
+  ],
+  "calibration_to_recorded": [
+    3,
+    4,
+    0,
+    2,
+    1
+  ],
+  "display_to_recorded": [
+    1,
+    4,
+    2,
+    0,
+    3
+  ],
+  "width": 854,
+  "height": 480,
+  "fps": 30,
+  "frames": 4394,
+  "duration_seconds": 146.46666666666667,
+  "audio": false,
+  "sha256": "6fa4e757abc8bf01149bba40057b71c5e8cb3eb3c08b74ab4e76f35b78f31fca",
+  "publication": "User explicitly approved this example for the public repository on 2026-11-12."
+}
