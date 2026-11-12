@@ -26,3 +26,8 @@ __pycache__/
 
 # Explicitly approved center-camera demonstration only.
 !examples/C2_center_480p.mp4
+
+!Annotation_tool_with_C2.zip
+
+!Annotation_tool.zip
+!annotation_videos/*.mp4

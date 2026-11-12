@@ -106,8 +106,22 @@ def prepare_proxy(source, folder, k):
         'method':'854-pixel-wide H.264 baseline preview; no frame resampling; annotation restricted to shared range'
     },indent=2))
     return p
+def load_video_set(root,path):
+    sessions={};root=Path(root).resolve()
+    for info in json.loads(Path(path).read_text())['sessions']:
+        sid=info['session_id'];k=info['recorded_camera'];mapping=info['display_to_recorded']
+        if not re.fullmatch(r'S\d+_[LR]_hand_gestures_\d+_\d+',sid) or sid in sessions:raise ValueError('Invalid or duplicate video identity')
+        if len(mapping)!=5 or sorted(mapping)!=list(range(5)) or type(k) is not int or mapping[2]!=k or info['physical_camera']!='C2':raise ValueError('Video does not match its physical C2 mapping')
+        video=(root/info['filename']).resolve()
+        if not video.is_relative_to(root):raise ValueError('Video path must stay inside the supplied folder')
+        if not video.is_file() or hashlib.sha256(video.read_bytes()).hexdigest()!=info['sha256']:raise ValueError('Video missing or checksum differs; run launch.py to download the supplied set')
+        if info['fps']!=30 or type(info['frame_count']) is not int or info['frame_count']<1:raise ValueError('Invalid annotation timeline')
+        sessions[sid]=dict(session_id=sid,participant_id=sid.split('_')[0],hand=sid.split('_')[1],frame_count=info['frame_count'],fps=30,aligned_folder=str(root),single_video=str(video),camera_mapping_verified=True,camera_views=[dict(display_camera=2,recorded_camera=k,label='C2 (center)')])
+    if not sessions:raise ValueError('The supplied video set is empty')
+    return sessions
+
 def main():
-    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--root',required=True,type=Path);ap.add_argument('--processing',type=Path);ap.add_argument('--out',type=Path);ap.add_argument('--suggestions',type=Path);ap.add_argument('--port',type=int,default=8765);a=ap.parse_args()
+    ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('--root',required=True,type=Path);ap.add_argument('--processing',type=Path);ap.add_argument('--out',type=Path);ap.add_argument('--suggestions',type=Path);ap.add_argument('--single-video',type=Path);ap.add_argument('--video-set',type=Path);ap.add_argument('--port',type=int,default=8765);a=ap.parse_args()
     root=a.root.resolve();processing=a.processing.resolve() if a.processing else root;out=a.out.resolve() if a.out else root/'annotations'
     if not root.is_dir():raise SystemExit('Recording folder does not exist.')
     if not 1<=a.port<=65535:raise SystemExit('Port must be between 1 and 65535.')
@@ -116,8 +130,22 @@ def main():
     for capture in root.glob('S*_hand_gestures_*'):
         if out==capture or capture in out.parents:raise SystemExit('Do not save annotations inside a capture session.')
     out.mkdir(parents=True,exist_ok=True);proxy=out/'video_proxies';proxy.mkdir(exist_ok=True);lock=threading.Lock();save_lock=threading.Lock();html=Path(__file__).with_name('study_annotation_tool.html').read_bytes()
-    session_cache=discover(root,processing)
-    def get_sessions():return discover(root,processing)
+    if a.video_set:
+        supplied_set=load_video_set(root,a.video_set)
+        def get_sessions():return supplied_set
+    elif a.single_video:
+        video=a.single_video.resolve();info=json.loads(video.with_name('example_info.json').read_text())
+        sid=info['session_id']
+        if not re.fullmatch(r'S\d+_[LR]_hand_gestures_\d+_\d+',sid):raise SystemExit('Invalid video session identity')
+        if info['fps']!=30 or hashlib.sha256(video.read_bytes()).hexdigest()!=info['sha256']:raise SystemExit('Video differs from its supplied timeline/checksum metadata')
+        k=info['recorded_camera']
+        if type(k) is not int or k not in range(5):raise SystemExit('Invalid recorded camera')
+        if info.get('physical_camera')!='C2' or len(info.get('display_to_recorded',[]))!=5 or info['display_to_recorded'][2]!=k:raise SystemExit('The supplied camera mapping does not identify this video as physical C2')
+        single={sid:dict(session_id=sid,participant_id=sid.split('_')[0],hand=sid.split('_')[1],frame_count=info['frames'],fps=30,aligned_folder=str(video.parent),single_video=str(video),camera_mapping_verified=True,camera_views=[dict(display_camera=2,recorded_camera=k,label='C2 (center)')])}
+        def get_sessions():return single
+    else:
+        def get_sessions():return discover(root,processing)
+    session_cache=get_sessions()
     class Handler(BaseHTTPRequestHandler):
         def log_message(self,fmt,*args):pass
         def reply(self,status,data,kind='application/json'):
@@ -153,10 +181,11 @@ def main():
             if u.path!='/video':return self.reply(404,{'error':'Not found'})
             try:
                 sessions=get_sessions();sid=q['session'][0];k=int(q['camera'][0]);s=sessions[sid]
-                if k not in range(5):raise ValueError('Invalid camera')
+                if k not in [v['recorded_camera'] for v in s['camera_views']]:raise ValueError('This camera is not included in the supplied recording')
                 source=Path(s['aligned_folder'])/f'cam{k}.mkv';folder=proxy/sid
                 supplied=root/'video_proxies'/sid/f'cam{k}_480p_v2.mp4'
-                if supplied.exists():p=supplied
+                if s.get('single_video'):p=Path(s['single_video'])
+                elif supplied.exists():p=supplied
                 else:
                     with lock:p=prepare_proxy(source,folder,k)
                 size=p.stat().st_size;start=0;end=size-1;partial=False

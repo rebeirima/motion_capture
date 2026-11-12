@@ -1,5 +1,6 @@
 """Isolated checks using synthetic sessions; no study data or network required."""
 import contextlib
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -85,6 +86,33 @@ class AnnotationTests(unittest.TestCase):
         result=self.request('/sessions')['data']['sessions'][0]
         self.assertFalse(result['camera_mapping_verified'])
         self.assertTrue(all(v['display_camera'] is None for v in result['camera_views']))
+
+    def test_included_single_c2_video_can_be_annotated(self):
+        video=self.root/'C2_center_480p.mp4';video.write_bytes(bytes(range(256))*2)
+        (self.root/'example_info.json').write_text(json.dumps(dict(session_id=SID,fps=30,frames=1000,recorded_camera=2,physical_camera='C2',display_to_recorded=[1,4,2,0,3],sha256=hashlib.sha256(video.read_bytes()).hexdigest())))
+        captured={}
+        class FakeServer:
+            def __init__(self,address,handler):captured['handler']=handler
+            def serve_forever(self):pass
+        with patch.object(app,'ThreadingHTTPServer',FakeServer),patch.object(sys,'argv',['server','--root',str(self.root),'--single-video',str(video)]),contextlib.redirect_stdout(io.StringIO()):app.main()
+        self.handler=captured['handler']
+        result=self.request('/sessions')['data']['sessions'][0]
+        self.assertEqual(result['camera_views'],[dict(display_camera=2,recorded_camera=2,label='C2 (center)')])
+        self.assertEqual(self.request('/video?session='+SID+'&camera=2',headers={'Range':'bytes=0-9'})['body'],bytes(range(10)))
+        self.assertEqual(self.request('/video?session='+SID+'&camera=1')['status'],400)
+        self.assertEqual(self.request('/save',self.payload())['status'],200)
+
+    def test_multiple_c2_videos_keep_session_specific_recorded_cameras(self):
+        entries=[]
+        for sid,k,mapping in [(SID,2,[1,4,2,0,3]),('S998_R_hand_gestures_20000101_000000',4,[3,0,4,2,1])]:
+            filename=sid+'.mp4';path=self.root/filename;path.write_bytes(b'synthetic video')
+            entries.append(dict(session_id=sid,recorded_camera=k,display_to_recorded=mapping,physical_camera='C2',fps=30,frame_count=1000,filename=filename,sha256=hashlib.sha256(path.read_bytes()).hexdigest()))
+        manifest=self.root/'included_videos.json';manifest.write_text(json.dumps(dict(sessions=entries)))
+        sessions=app.load_video_set(self.root,manifest)
+        self.assertEqual(len(sessions),2)
+        self.assertEqual(sessions[entries[1]['session_id']]['camera_views'][0],dict(display_camera=2,recorded_camera=4,label='C2 (center)'))
+        entries[0]['display_to_recorded']=[0,1,4,3,2];manifest.write_text(json.dumps(dict(sessions=entries)))
+        with self.assertRaises(ValueError):app.load_video_set(self.root,manifest)
 
     def test_refresh_discovers_new_folders_and_lists_raw_only_sessions(self):
         sid='S998_R_hand_gestures_20000101_000000'
