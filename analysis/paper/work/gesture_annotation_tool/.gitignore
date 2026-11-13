@@ -1,12 +1,12 @@
 # Study data stays outside version control.
 data/
-annotations/
+#annotations/
 video_proxies/
 suggestions/
-S*_hand_gestures_*/
+#S*_hand_gestures_*/
 annotation_sessions.json
-gesture_windows_*.csv
-gesture_windows_*.json
+#gesture_windows_*.csv
+#gesture_windows_*.json
 *.mp4
 *.mkv
 *.mov

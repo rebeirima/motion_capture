@@ -1,0 +1,20 @@
+participant_id,hand,session_id,gesture,repetition,start_frame,end_frame,start_time_s,end_time_s,number_of_frames,reference_recorded_camera,annotation_source,suggestion_id,manually_reviewed,fps
+S0011,L,S0011_L_hand_gestures_20261007_152125,baseline,1,300,400,10.0,13.333333333333334,101,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,open,1,450,480,15.0,16.0,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,open,2,530,570,17.666666666666668,19.0,41,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_1,1,810,840,27.0,28.0,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_1,2,900,930,30.0,31.0,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_2,1,990,1020,33.0,34.0,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_2,2,1105,1125,36.833333333333336,37.5,21,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_3,1,1165,1187,38.833333333333336,39.56666666666667,23,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_3,2,1250,1280,41.666666666666664,42.666666666666664,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_4,1,1330,1365,44.333333333333336,45.5,36,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,finger_4,2,1435,1465,47.833333333333336,48.833333333333336,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,L,1,1530,1600,51.0,53.333333333333336,71,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,L,2,1660,1710,55.333333333333336,57.0,51,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,box,1,1790,1830,59.666666666666664,61.0,41,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,box,2,1900,1930,63.333333333333336,64.33333333333333,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,claw,1,2020,2060,67.33333333333333,68.66666666666667,41,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,claw,2,2130,2160,71.0,72.0,31,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,fist,1,2250,2290,75.0,76.33333333333333,41,3,manual synchronized-video review,,True,30
+S0011,L,S0011_L_hand_gestures_20261007_152125,fist,2,2340,2380,78.0,79.33333333333333,41,3,manual synchronized-video review,,True,30

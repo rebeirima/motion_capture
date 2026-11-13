@@ -1,0 +1,13 @@
+{
+  "session_id": "S013_L_hand_gestures_20261016_143147",
+  "shared_frames": 4395,
+  "protocol_slots": 33,
+  "complete_windows": 29,
+  "all_slots_annotated": false,
+  "other_views_reviewed": false,
+  "source_aligned_folder": "/Users/noahr/Desktop/gesture_annotation_tool/annotation_videos",
+  "csv_sha256": "49a486b82ba4d24dcd7fdc9c81b6c355ccf265458da3b681c57833427d589978",
+  "saved_utc": "2026-11-12T20:54:38.794059+00:00",
+  "clinical_validation": false,
+  "reviewed_assisted_windows": 0
+}
